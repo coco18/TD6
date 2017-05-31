@@ -37,7 +37,7 @@ public class Accueil extends AppCompatActivity {
                 Intent versSecondeActivity = new Intent(Accueil.this, Resultat.class);
                 versSecondeActivity.putExtra("Nbresult", nbresult.getSelectedItem().toString());
 
-                versSecondeActivity.putExtra("Film", film.getText());
+                versSecondeActivity.putExtra("Film", film.getText().toString());
                 startActivity(versSecondeActivity);
             }
         });
