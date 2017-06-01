@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -17,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +37,7 @@ public class Resultat extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         final TextView textView = (TextView) findViewById(R.id.textView);
+        final List<Film> listFilm = new ArrayList<Film>();
 
         Intent intent = this.getIntent();
         String film = intent.getStringExtra("Film");
@@ -48,7 +54,6 @@ public class Resultat extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                        try {
                             int nbResultatResponse = new Integer(response.get("total_results").toString());
-                            List<Film> listFilm = new ArrayList<Film>();
                             for (int i=0; i<nbResultatResponse; i++){
                                 JSONObject jsonObject = response.getJSONArray("results").getJSONObject(i);
                                 listFilm.add(new Film(
@@ -59,10 +64,10 @@ public class Resultat extends AppCompatActivity {
                                 ));
                             }
 
-                            textView.setText("Nombre de resultat : "+listFilm.toString());
+                            textView.setText("Nombre de resultat : "+nbResultatResponse);
                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                           textView.setText("Aucun résultat disponnible");
+                       }
                     }
                 }, new Response.ErrorListener() {
 
@@ -75,5 +80,20 @@ public class Resultat extends AppCompatActivity {
 
         // Access the RequestQueue through your singleton class.
         queue.add(jsObjRequest);
+
+        ArrayAdapter<Film> adapterResultFilm = new AdapterResultFilm(this, listFilm);
+        final ListView listView = (ListView) findViewById(R.id.listview_result);
+        listView.setAdapter(adapterResultFilm);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Film film = (Film) parent.getAdapter().getItem(position);
+                Intent versSecondeActivity = new Intent(Resultat.this, DetailFilm.class);
+
+                versSecondeActivity.putExtra("Film", film);
+                startActivity(versSecondeActivity);
+            }
+        });
     }
 }

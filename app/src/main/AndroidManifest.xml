@@ -19,6 +19,9 @@
         <activity android:name=".Resultat">
 
         </activity>
+        <activity android:name=".DetailFilm">
+
+        </activity>
     </application>
 
 </manifest>

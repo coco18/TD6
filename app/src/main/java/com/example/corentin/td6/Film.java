@@ -1,10 +1,13 @@
 package com.example.corentin.td6;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Corentin on 31/05/2017.
  */
 
-public class Film {
+public class Film implements Parcelable {
 
     private String titre;
     private String description;
@@ -16,6 +19,13 @@ public class Film {
         this.description = description;
         this.poster = poster;
         this.toileDeFond = toileDeFond;
+    }
+
+    public Film(Parcel in){
+        this.titre = in.readString();
+        this.description = in.readString();
+        this.poster = in.readString();
+        this.toileDeFond = in.readString();
     }
 
     public String getTitre() {
@@ -59,4 +69,31 @@ public class Film {
                 ", toileDeFond='" + toileDeFond + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.titre);
+        dest.writeString(this.description);
+        dest.writeString(this.poster);
+        dest.writeString(this.toileDeFond);
+    }
+
+    public static final Parcelable.Creator<Film> CREATOR = new Parcelable.Creator<Film>(){
+
+        @Override
+        public Film createFromParcel(Parcel source) {
+            return new Film(source);
+        }
+
+        @Override
+        public Film[] newArray(int size) {
+            return new Film[0];
+        }
+    };
+
 }
