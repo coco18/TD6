@@ -29,20 +29,36 @@ public class DetailFilm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_film);
 
-        Film film =  this.getIntent().getExtras().getParcelable("Film");
+        if (this.getIntent().getExtras().getString("Type").contentEquals("Film")){
+            Film film =  this.getIntent().getExtras().getParcelable("Film");
+            ImageView poster = (ImageView) findViewById(R.id.imageViewDetailPoster);
+            Picasso.with(this.getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+film.getPoster()).into(poster);
+
+            TextView titre = (TextView) findViewById(R.id.textViewDetailTitre);
+            titre.setText(film.getNom());
+
+            TextView description = (TextView) findViewById(R.id.textViewDetailDescription);
+            description.setText(film.getDescription());
+
+            ImageView toileDeFond = (ImageView) findViewById(R.id.imageViewDetailFond);
+            Picasso.with(this.getApplicationContext()).load("https://image.tmdb.org/t/p/w1000"+film.getToileDeFond()).into(toileDeFond);
+        } else {
+            Serie serie = this.getIntent().getExtras().getParcelable("Serie");
+            ImageView poster = (ImageView) findViewById(R.id.imageViewDetailPoster);
+            Picasso.with(this.getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+serie.getPoster()).into(poster);
+
+            TextView titre = (TextView) findViewById(R.id.textViewDetailTitre);
+            titre.setText(serie.getNom());
+
+            TextView description = (TextView) findViewById(R.id.textViewDetailDescription);
+            description.setText(serie.getDescription());
+
+            ImageView toileDeFond = (ImageView) findViewById(R.id.imageViewDetailFond);
+            Picasso.with(this.getApplicationContext()).load("https://image.tmdb.org/t/p/w1000"+serie.getToileDeFond()).into(toileDeFond);
+        }
 
 
-        ImageView poster = (ImageView) findViewById(R.id.imageViewDetailPoster);
-        Picasso.with(this.getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+film.getPoster()).into(poster);
 
-        TextView titre = (TextView) findViewById(R.id.textViewDetailTitre);
-        titre.setText(film.getTitre());
-
-        TextView description = (TextView) findViewById(R.id.textViewDetailDescription);
-        description.setText(film.getDescription());
-
-        ImageView toileDeFond = (ImageView) findViewById(R.id.imageViewDetailFond);
-        Picasso.with(this.getApplicationContext()).load("https://image.tmdb.org/t/p/w1000"+film.getToileDeFond()).into(toileDeFond);
 
 
     }

@@ -44,7 +44,43 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/nbresultat"
                 android:layout_weight="1" />
+
         </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/radioButtonTous">
+
+            <RadioButton
+                android:text="Tous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonTous"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="Film"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonFilm"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="Série"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonSerie"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="Personne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonPersonne"
+                android:layout_weight="1" />
+        </RadioGroup>
 
         <Button
             android:text="Recherche"

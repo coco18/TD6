@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -20,15 +22,19 @@ public class Accueil extends AppCompatActivity {
         setContentView(R.layout.activity_accueil);
 
         List<Integer> list = new ArrayList<Integer>();
-        for (int i=0 ; i<30;i++){
+        for (int i=5 ; i<=50;i+=5){
             list.add(i);
         }
 
         final Spinner nbresult = (Spinner) findViewById(R.id.nbresultat);
         ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, list);
         nbresult.setAdapter(arrayAdapter);
+        nbresult.setSelection(1);
 
-        final EditText film = (EditText) findViewById(R.id.editTextTitreFilm);
+        final EditText editTextRecherche = (EditText) findViewById(R.id.editTextTitreFilm);
+        final RadioButton film = (RadioButton) findViewById(R.id.radioButtonFilm);
+        final RadioButton serie = (RadioButton) findViewById(R.id.radioButtonSerie);
+        final RadioButton personne = (RadioButton) findViewById(R.id.radioButtonPersonne);
 
         Button recherche = (Button) findViewById(R.id.buttonRecherche);
         recherche.setOnClickListener(new View.OnClickListener() {
@@ -37,9 +43,21 @@ public class Accueil extends AppCompatActivity {
                 Intent versSecondeActivity = new Intent(Accueil.this, Resultat.class);
                 versSecondeActivity.putExtra("Nbresult", nbresult.getSelectedItem().toString());
 
-                versSecondeActivity.putExtra("Film", film.getText().toString());
+                //Choix type resultat
+                if (film.isChecked()){
+                    versSecondeActivity.putExtra("TypeDemander", "Film");
+                } else if(serie.isChecked()){
+                    versSecondeActivity.putExtra("TypeDemander", "Serie");
+                } else if (personne.isChecked()){
+                    versSecondeActivity.putExtra("TypeDemander", "Personne");
+                } else {
+                    versSecondeActivity.putExtra("TypeDemander", "Tous");
+                }
+
+                versSecondeActivity.putExtra("Film", editTextRecherche.getText().toString());
                 startActivity(versSecondeActivity);
             }
         });
     }
+
 }

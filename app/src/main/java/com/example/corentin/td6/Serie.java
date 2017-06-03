@@ -4,21 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Corentin on 31/05/2017.
+ * Created by Corentin on 03/06/2017.
  */
 
-public class Film extends Media implements Parcelable {
+public class Serie extends Media implements Parcelable{
 
     private String description;
     private String toileDeFond;
 
-    public Film(String nom, String description, String poster, String toileDeFond) {
-        super(nom, "Film", poster);
+    public Serie(String nom, String description, String poster, String toileDeFond) {
+        super(nom, "Serie", poster);
         this.description = description;
         this.toileDeFond = toileDeFond;
     }
 
-    public Film(Parcel source) {
+    public Serie(Parcel source) {
         super(source.readString(), source.readString(), source.readString());
         this.description = source.readString();
         this.toileDeFond = source.readString();
@@ -57,17 +57,16 @@ public class Film extends Media implements Parcelable {
         dest.writeString(this.toileDeFond);
     }
 
-    public static final Parcelable.Creator<Film> CREATOR = new Parcelable.Creator<Film>(){
+    public static final Parcelable.Creator<Serie> CREATOR = new Parcelable.Creator<Serie>(){
 
         @Override
-        public Film createFromParcel(Parcel source) {
-            return new Film(source);
+        public Serie createFromParcel(Parcel source) {
+            return new Serie(source);
         }
 
         @Override
-        public Film[] newArray(int size) {
-            return new Film[0];
-        }
+        public Serie[] newArray(int size) { return new Serie[0]; }
     };
+
 
 }
