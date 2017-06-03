@@ -147,18 +147,16 @@ public class Resultat extends AppCompatActivity {
                 if (media.getType().contentEquals("Film")){
                     Film film = (Film) media;
                     Intent versSecondeActivity = new Intent(Resultat.this, DetailFilm.class);
-                    versSecondeActivity.putExtra("Type", "Film");
                     versSecondeActivity.putExtra("Film", film);
                     startActivity(versSecondeActivity);
                 } else if (media.getType().contentEquals("Serie")){
                     Serie serie = (Serie) media;
-                    Intent versSecondeActivity = new Intent(Resultat.this, DetailFilm.class);
-                    versSecondeActivity.putExtra("Type", "Serie");
+                    Intent versSecondeActivity = new Intent(Resultat.this, DetailSerie.class);
                     versSecondeActivity.putExtra("Serie", serie);
                     startActivity(versSecondeActivity);
                 } else if (media.getType().contentEquals("Personne")){
                     Personne p = (Personne) media;
-                    Intent versSecondeActivity = new Intent(Resultat.this, DetailFilm.class);
+                    Intent versSecondeActivity = new Intent(Resultat.this, DetailPersonne.class);
 
                     versSecondeActivity.putExtra("Personne", p);
                     startActivity(versSecondeActivity);
