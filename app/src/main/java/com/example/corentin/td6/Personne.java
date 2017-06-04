@@ -33,6 +33,10 @@ public class Personne extends Media implements Parcelable{
         }
     }
 
+    public List<Media> getConnuePour() {
+        return connuePour;
+    }
+
     public void ajoutConnuePour(Media media){
         connuePour.add(media);
     }

@@ -101,12 +101,39 @@ public class Resultat extends AppCompatActivity {
                                                 jsonObject.getString("poster_path"),
                                                 jsonObject.getString("backdrop_path")
                                         ));
+                                    } else if (jsonObject.getString("media_type").contentEquals("person")){
+                                        Personne p = new Personne(
+                                                jsonObject.getString("name"),
+                                                jsonObject.getString("profile_path")
+                                        );
+                                        Log.e("test", p.toString());
+                                        JSONArray connuePour = jsonObject.getJSONArray("known_for");
+                                        for (int j=0; j<connuePour.length();j++){
+                                            JSONObject media = connuePour.getJSONObject(j);
+                                            if (media.getString("media_type").contentEquals("movie")){
+                                                p.ajoutConnuePour(new Film(
+                                                        media.getString("original_title"),
+                                                        media.getString("overview"),
+                                                        media.getString("poster_path"),
+                                                        media.getString("backdrop_path")
+                                                ));
+                                            } else if (media.getString("media_type").contentEquals("tv")){
+                                                p.ajoutConnuePour(new Serie(
+                                                        media.getString("name"),
+                                                        media.getString("overview"),
+                                                        media.getString("poster_path"),
+                                                        media.getString("backdrop_path")
+                                                ));
+                                            }
+                                        }
+                                        listResultat.add(p);
                                     }
                                 } else {
                                     Personne p = new Personne(
                                             jsonObject.getString("name"),
                                             jsonObject.getString("profile_path")
                                     );
+                                    Log.e("test", p.toString());
                                     JSONArray connuePour = jsonObject.getJSONArray("known_for");
                                     for (int j=0; j<connuePour.length();j++){
                                         JSONObject media = connuePour.getJSONObject(j);
