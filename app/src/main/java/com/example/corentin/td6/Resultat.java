@@ -44,9 +44,9 @@ public class Resultat extends AppCompatActivity {
         film = film.replaceAll("\\s", "\\+");
 
         String url ="";
-        String typeDemander = intent.getStringExtra("TypeDemander");
+        final String typeDemander = intent.getStringExtra("TypeDemander");
         if (typeDemander.contentEquals("Film")){
-             url = "https://api.themoviedb.org/3/search/movie?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
+            url = "https://api.themoviedb.org/3/search/movie?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
         } else if(typeDemander.contentEquals("Serie")){
             url = "https://api.themoviedb.org/3/search/tv?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
         } else if (typeDemander.contentEquals("Personne")){
@@ -54,6 +54,7 @@ public class Resultat extends AppCompatActivity {
         } else {
             url = "https://api.themoviedb.org/3/search/multi?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
         }
+
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -69,10 +70,24 @@ public class Resultat extends AppCompatActivity {
                             if (nbResultatResponse<nbResultatAfficher){
                                 nbResultatAfficher=nbResultatResponse;
                             }
-                            for (int i=0; i<nbResultatAfficher; i++){
+                           for (int i=0; i<nbResultatAfficher; i++){
                                 JSONObject jsonObject = response.getJSONArray("results").getJSONObject(i);
-                                if (jsonObject.has("media_type")){
-                                    if (jsonObject.getString("media_type").contentEquals("movie")){
+                                if (jsonObject.has("media_type") || typeDemander.contentEquals("Film") || typeDemander.contentEquals("Serie")){
+                                    if (typeDemander.contentEquals("Film")){
+                                        listResultat.add(new Film(
+                                                jsonObject.getString("original_title"),
+                                                jsonObject.getString("overview"),
+                                                jsonObject.getString("poster_path"),
+                                                jsonObject.getString("backdrop_path")
+                                        ));
+                                    } else if (typeDemander.contentEquals("Serie")){
+                                        listResultat.add(new Serie(
+                                                jsonObject.getString("name"),
+                                                jsonObject.getString("overview"),
+                                                jsonObject.getString("poster_path"),
+                                                jsonObject.getString("backdrop_path")
+                                        ));
+                                    } else if (jsonObject.getString("media_type").contentEquals("movie")){
                                         listResultat.add(new Film(
                                                 jsonObject.getString("original_title"),
                                                 jsonObject.getString("overview"),
@@ -81,7 +96,7 @@ public class Resultat extends AppCompatActivity {
                                         ));
                                     } else if (jsonObject.getString("media_type").contentEquals("tv")){
                                         listResultat.add(new Serie(
-                                                jsonObject.getString("original_title"),
+                                                jsonObject.getString("name"),
                                                 jsonObject.getString("overview"),
                                                 jsonObject.getString("poster_path"),
                                                 jsonObject.getString("backdrop_path")
@@ -104,7 +119,7 @@ public class Resultat extends AppCompatActivity {
                                             ));
                                         } else if (media.getString("media_type").contentEquals("tv")){
                                             p.ajoutConnuePour(new Serie(
-                                                    media.getString("original_title"),
+                                                    media.getString("name"),
                                                     media.getString("overview"),
                                                     media.getString("poster_path"),
                                                     media.getString("backdrop_path")
@@ -119,6 +134,7 @@ public class Resultat extends AppCompatActivity {
 
                             textView.setText("Nombre de resultat : "+nbResultatResponse);
                        } catch (JSONException e) {
+                           e.printStackTrace();
                            textView.setText("Aucun résultat disponnible");
                        }
                     }
@@ -146,11 +162,13 @@ public class Resultat extends AppCompatActivity {
                 Log.e("te", media.toString());
                 if (media.getType().contentEquals("Film")){
                     Film film = (Film) media;
+                    Log.e("film", film.toString());
                     Intent versSecondeActivity = new Intent(Resultat.this, DetailFilm.class);
                     versSecondeActivity.putExtra("Film", film);
                     startActivity(versSecondeActivity);
                 } else if (media.getType().contentEquals("Serie")){
                     Serie serie = (Serie) media;
+                    Log.e("test", serie.toString());
                     Intent versSecondeActivity = new Intent(Resultat.this, DetailSerie.class);
                     versSecondeActivity.putExtra("Serie", serie);
                     startActivity(versSecondeActivity);

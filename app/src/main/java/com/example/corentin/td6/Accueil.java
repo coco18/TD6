@@ -41,7 +41,7 @@ public class Accueil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent versSecondeActivity = new Intent(Accueil.this, Resultat.class);
-                versSecondeActivity.putExtra("Nbresult", nbresult.getSelectedItem().toString());
+                versSecondeActivity.putExtra("Nbresult", Integer.parseInt(nbresult.getSelectedItem().toString()));
 
                 //Choix type resultat
                 if (film.isChecked()){
