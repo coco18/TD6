@@ -19,7 +19,7 @@ import java.util.List;
 public class AdapterPersonneFilmSerie extends ArrayAdapter<Media> {
 
     public AdapterPersonneFilmSerie(Context context, List<Media> objects) {
-        super(context, R.layout.adpater_film_result, objects);
+        super(context, R.layout.adapter_film_serie_personne, objects);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {

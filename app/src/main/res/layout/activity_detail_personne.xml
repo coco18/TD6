@@ -29,11 +29,6 @@
                 android:id="@+id/textViewDetailNom" />
         </GridLayout>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listview_detail_personne_list_film"
-            android:scrollbars="horizontal" />
 
         <GridView
             android:layout_width="match_parent"
