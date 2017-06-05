@@ -9,15 +9,25 @@ import android.os.Parcelable;
 
 public abstract class Media {
 
+    private int id;
     private String nom;
     private String poster;
     private String type;
 
 
-    public Media(String nom, String type, String poster) {
+    public Media(int id, String nom, String type, String poster) {
+        this.id = id;
         this.nom = nom;
         this.type = type;
         this.poster = poster;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -47,7 +57,8 @@ public abstract class Media {
     @Override
     public String toString() {
         return "Media{" +
-                "nom='" + nom + '\'' +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
                 ", poster='" + poster + '\'' +
                 ", type='" + type + '\'' +
                 '}';

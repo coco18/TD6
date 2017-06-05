@@ -61,7 +61,7 @@ public class Resultat extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+        final JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
@@ -85,6 +85,7 @@ public class Resultat extends AppCompatActivity {
                                 if (jsonObject.has("media_type") || typeDemander.contentEquals("Film") || typeDemander.contentEquals("Serie")){
                                     if (typeDemander.contentEquals("Film")){
                                         listResultat.add(new Film(
+                                                jsonObject.getInt("id"),
                                                 jsonObject.getString("original_title"),
                                                 jsonObject.getString("overview"),
                                                 jsonObject.getString("poster_path"),
@@ -92,6 +93,7 @@ public class Resultat extends AppCompatActivity {
                                         ));
                                     } else if (typeDemander.contentEquals("Serie")){
                                         listResultat.add(new Serie(
+                                                jsonObject.getInt("id"),
                                                 jsonObject.getString("name"),
                                                 jsonObject.getString("overview"),
                                                 jsonObject.getString("poster_path"),
@@ -99,6 +101,7 @@ public class Resultat extends AppCompatActivity {
                                         ));
                                     } else if (jsonObject.getString("media_type").contentEquals("movie")){
                                         listResultat.add(new Film(
+                                                jsonObject.getInt("id"),
                                                 jsonObject.getString("original_title"),
                                                 jsonObject.getString("overview"),
                                                 jsonObject.getString("poster_path"),
@@ -106,6 +109,7 @@ public class Resultat extends AppCompatActivity {
                                         ));
                                     } else if (jsonObject.getString("media_type").contentEquals("tv")){
                                         listResultat.add(new Serie(
+                                                jsonObject.getInt("id"),
                                                 jsonObject.getString("name"),
                                                 jsonObject.getString("overview"),
                                                 jsonObject.getString("poster_path"),
@@ -113,6 +117,7 @@ public class Resultat extends AppCompatActivity {
                                         ));
                                     } else if (jsonObject.getString("media_type").contentEquals("person")){
                                         Personne p = new Personne(
+                                                jsonObject.getInt("id"),
                                                 jsonObject.getString("name"),
                                                 jsonObject.getString("profile_path")
                                         );
@@ -122,6 +127,7 @@ public class Resultat extends AppCompatActivity {
                                             JSONObject media = connuePour.getJSONObject(j);
                                             if (media.getString("media_type").contentEquals("movie")){
                                                 p.ajoutConnuePour(new Film(
+                                                        media.getInt("id"),
                                                         media.getString("original_title"),
                                                         media.getString("overview"),
                                                         media.getString("poster_path"),
@@ -129,6 +135,7 @@ public class Resultat extends AppCompatActivity {
                                                 ));
                                             } else if (media.getString("media_type").contentEquals("tv")){
                                                 p.ajoutConnuePour(new Serie(
+                                                        media.getInt("id"),
                                                         media.getString("name"),
                                                         media.getString("overview"),
                                                         media.getString("poster_path"),
@@ -140,6 +147,7 @@ public class Resultat extends AppCompatActivity {
                                     }
                                 } else {
                                     Personne p = new Personne(
+                                            jsonObject.getInt("id"),
                                             jsonObject.getString("name"),
                                             jsonObject.getString("profile_path")
                                     );
@@ -149,6 +157,7 @@ public class Resultat extends AppCompatActivity {
                                         JSONObject media = connuePour.getJSONObject(j);
                                         if (media.getString("media_type").contentEquals("movie")){
                                             p.ajoutConnuePour(new Film(
+                                                    media.getInt("id"),
                                                     media.getString("original_title"),
                                                     media.getString("overview"),
                                                     media.getString("poster_path"),
@@ -156,6 +165,7 @@ public class Resultat extends AppCompatActivity {
                                             ));
                                         } else if (media.getString("media_type").contentEquals("tv")){
                                             p.ajoutConnuePour(new Serie(
+                                                    media.getInt("id"),
                                                     media.getString("name"),
                                                     media.getString("overview"),
                                                     media.getString("poster_path"),

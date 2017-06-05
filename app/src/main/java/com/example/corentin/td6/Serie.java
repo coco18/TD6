@@ -12,14 +12,14 @@ public class Serie extends Media implements Parcelable{
     private String description;
     private String toileDeFond;
 
-    public Serie(String nom, String description, String poster, String toileDeFond) {
-        super(nom, "Serie", poster);
+    public Serie(int id, String nom, String description, String poster, String toileDeFond) {
+        super(id, nom, "Serie", poster);
         this.description = description;
         this.toileDeFond = toileDeFond;
     }
 
     public Serie(Parcel source) {
-        super(source.readString(), source.readString(), source.readString());
+        super(source.readInt(), source.readString(), source.readString(), source.readString());
         this.description = source.readString();
         this.toileDeFond = source.readString();
     }
@@ -50,6 +50,7 @@ public class Serie extends Media implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(super.getId());
         dest.writeString(super.getNom());
         dest.writeString(super.getType());
         dest.writeString(super.getPoster());

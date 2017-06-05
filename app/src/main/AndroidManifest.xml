@@ -28,6 +28,9 @@
         <activity android:name=".DetailPersonne">
 
         </activity>
+        <activity android:name=".PlusInfoFilmSerie">
+
+        </activity>
     </application>
 
 </manifest>

@@ -15,13 +15,13 @@ public class Personne extends Media implements Parcelable{
 
     private List<Media> connuePour;
 
-    public Personne(String nom, String poster) {
-        super(nom, "Personne", poster);
+    public Personne(int id, String nom, String poster) {
+        super(id, nom, "Personne", poster);
         this.connuePour = new ArrayList<Media>();
     }
 
     public Personne(Parcel source) {
-        super(source.readString(), source.readString(), source.readString());
+        super(source.readInt(), source.readString(), source.readString(), source.readString());
         this.connuePour = new ArrayList<Media>();
         int nbmedia = source.readInt();
         for (int i=0; i<nbmedia;i++){
@@ -49,6 +49,7 @@ public class Personne extends Media implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(super.getId());
         dest.writeString(super.getNom());
         dest.writeString(super.getType());
         dest.writeString(super.getPoster());

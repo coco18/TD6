@@ -27,11 +27,20 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewDetailTitre" />
         </GridLayout>
+
+        <TextView
+            android:text="Description : "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textAlignment="center"/>
+
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment=""
             android:id="@+id/textViewDetailDescription" />
 
         <ImageView
@@ -39,6 +48,12 @@
             android:layout_height="match_parent"
             app:srcCompat="@android:color/background_light"
             android:id="@+id/imageViewDetailFond" />
+
+        <Button
+            android:text="Plus d'info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonplusdinfo" />
     </LinearLayout>
 
 </ScrollView>
