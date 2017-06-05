@@ -67,11 +67,12 @@ public class Resultat extends AppCompatActivity {
                        try {
                             int nbResultatResponse = new Integer(response.get("total_results").toString());
                             int nbResultatAfficher = nbresultdemander;
-                            if (nbResultatResponse<nbResultatAfficher){
-                                nbResultatAfficher=nbResultatResponse;
+                           JSONArray jsonArray = response.getJSONArray("results");
+                            if (jsonArray.length()<nbResultatAfficher){
+                                nbResultatAfficher=jsonArray.length();
                             }
                            for (int i=0; i<nbResultatAfficher; i++){
-                                JSONObject jsonObject = response.getJSONArray("results").getJSONObject(i);
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 if (jsonObject.has("media_type") || typeDemander.contentEquals("Film") || typeDemander.contentEquals("Serie")){
                                     if (typeDemander.contentEquals("Film")){
                                         listResultat.add(new Film(
@@ -163,6 +164,8 @@ public class Resultat extends AppCompatActivity {
                        } catch (JSONException e) {
                            e.printStackTrace();
                            textView.setText("Aucun résultat disponnible");
+                       } finally {
+                           textView.setText("Aucun résultat disponnible");
                        }
                     }
                 }, new Response.ErrorListener() {
@@ -170,12 +173,13 @@ public class Resultat extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-
+                        textView.setText("Aucun résultat disponnible");
                     }
                 });
 
         // Access the RequestQueue through your singleton class.
         queue.add(jsObjRequest);
+        Log.e("aa", jsObjRequest.toString());
 
         ArrayAdapter<Media> adapterResultFilm = new AdapterResultat(this, listResultat);
         final ListView listView = (ListView) findViewById(R.id.listview_result);

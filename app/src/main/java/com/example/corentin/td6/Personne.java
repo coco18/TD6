@@ -23,7 +23,8 @@ public class Personne extends Media implements Parcelable{
     public Personne(Parcel source) {
         super(source.readString(), source.readString(), source.readString());
         this.connuePour = new ArrayList<Media>();
-        for (int i=0; i<source.readInt();i++){
+        int nbmedia = source.readInt();
+        for (int i=0; i<nbmedia;i++){
             String type = source.readString();
             if (type.contentEquals("Film")){
                 this.connuePour.add(new Film(source));

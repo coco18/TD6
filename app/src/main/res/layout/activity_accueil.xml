@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Titre du film"
             android:ems="10"
-            android:id="@+id/editTextTitreFilm" />
+            android:id="@+id/editTextTitreFilm"
+            android:hint="Recherche" />
 
         <LinearLayout
             android:orientation="horizontal"
