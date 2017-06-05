@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,8 +33,8 @@ public class DetailPersonne extends AppCompatActivity {
         TextView titre = (TextView) findViewById(R.id.textViewDetailNom);
         titre.setText(personne.getNom());
 
-        ArrayAdapter<Media> adapterResultFilm = new AdapterResultat(this, personne.getConnuePour());
-        ListView listView = (ListView) findViewById(R.id.listview_detail_personne_list_film);
+        ArrayAdapter<Media> adapterResultFilm = new AdapterPersonneFilmSerie(this, personne.getConnuePour());
+        GridView listView = (GridView) findViewById(R.id.gridView);
         listView.setAdapter(adapterResultFilm);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
