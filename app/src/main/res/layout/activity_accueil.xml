@@ -16,9 +16,12 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:text="Bienvenu dans l'application de recherche de film, série et personne du cinéma."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!" />
+            android:textAlignment="center"
+            android:textSize="18sp"/>
+
 
         <EditText
             android:layout_width="match_parent"

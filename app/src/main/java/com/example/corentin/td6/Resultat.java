@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,19 +41,20 @@ public class Resultat extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         final int nbresultdemander = intent.getIntExtra("Nbresult",10);
-        String film = intent.getStringExtra("Film");
-        film = film.replaceAll("\\s", "\\+");
+        final int page = intent.getIntExtra("page",1);
+        final String filmdemande = intent.getStringExtra("Film");
+        String film = filmdemande.replaceAll("\\s", "\\+");
 
         String url ="";
         final String typeDemander = intent.getStringExtra("TypeDemander");
         if (typeDemander.contentEquals("Film")){
-            url = "https://api.themoviedb.org/3/search/movie?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
+            url = "https://api.themoviedb.org/3/search/movie?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr&page="+page;
         } else if(typeDemander.contentEquals("Serie")){
-            url = "https://api.themoviedb.org/3/search/tv?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
+            url = "https://api.themoviedb.org/3/search/tv?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr&page="+page;
         } else if (typeDemander.contentEquals("Personne")){
-            url = "https://api.themoviedb.org/3/search/person?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
+            url = "https://api.themoviedb.org/3/search/person?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr&page="+page;
         } else {
-            url = "https://api.themoviedb.org/3/search/multi?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr";
+            url = "https://api.themoviedb.org/3/search/multi?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&query="+film+"&language=fr&page="+page;
         }
 
 
@@ -68,9 +70,16 @@ public class Resultat extends AppCompatActivity {
                             int nbResultatResponse = new Integer(response.get("total_results").toString());
                             int nbResultatAfficher = nbresultdemander;
                            JSONArray jsonArray = response.getJSONArray("results");
+                           //Si le nombre de résultat de la réponse < que résultat souhaité.
                             if (jsonArray.length()<nbResultatAfficher){
                                 nbResultatAfficher=jsonArray.length();
                             }
+                           //Si le nombre résultat disponnible sur le site < nbresultat afficher
+                           if (jsonArray.length()*page>=nbResultatResponse){
+                               Button pageSuivante = (Button) findViewById(R.id.buttonPageSuivante);
+                               pageSuivante.setClickable(false);
+                               pageSuivante.setAlpha(.5f);
+                           }
                            for (int i=0; i<nbResultatAfficher; i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 if (jsonObject.has("media_type") || typeDemander.contentEquals("Film") || typeDemander.contentEquals("Serie")){
@@ -161,11 +170,14 @@ public class Resultat extends AppCompatActivity {
                             }
 
                             textView.setText("Nombre de resultat : "+nbResultatResponse);
+                           if (listResultat.size()==0){
+                               Button pageSuivante = (Button) findViewById(R.id.buttonPageSuivante);
+                               pageSuivante.setClickable(false);
+                               pageSuivante.setAlpha(.5f);
+                               textView.setText("Aucun résultat disponnible");
+                           }
                        } catch (JSONException e) {
-                           e.printStackTrace();
-                           textView.setText("Aucun résultat disponnible");
-                       } finally {
-                           textView.setText("Aucun résultat disponnible");
+
                        }
                     }
                 }, new Response.ErrorListener() {
@@ -211,6 +223,23 @@ public class Resultat extends AppCompatActivity {
                     startActivity(versSecondeActivity);
                 }
 
+            }
+        });
+
+        Button pagesuivante = (Button) findViewById(R.id.buttonPageSuivante);
+        pagesuivante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent versSecondeActivity = new Intent(Resultat.this, Resultat.class);
+                versSecondeActivity.putExtra("Nbresult", nbresultdemander+30);
+
+
+                versSecondeActivity.putExtra("TypeDemander", typeDemander);
+
+                versSecondeActivity.putExtra("page", page+1);
+
+                versSecondeActivity.putExtra("Film", filmdemande);
+                startActivity(versSecondeActivity);
             }
         });
     }
