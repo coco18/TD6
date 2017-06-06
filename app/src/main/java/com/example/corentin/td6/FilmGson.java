@@ -61,6 +61,18 @@ public class FilmGson {
         return genres;
     }
 
+    public String getGenre(){
+        String genre ="";
+        for (int i=0; i<this.genres.length;i++){
+            if (i==this.genres.length-1){
+                genre+= this.genres[i].getName();
+            } else {
+                genre += this.genres[i].getName() + ", ";
+            }
+        }
+        return genre;
+    }
+
     public void setGenres(Genres[] genres) {
         this.genres = genres;
     }
@@ -123,6 +135,18 @@ public class FilmGson {
 
     public ProductionCompanies[] getProduction_companies() {
         return production_companies;
+    }
+
+    public String getProduction(){
+        String produciton ="";
+        for (int i=0; i<this.production_companies.length;i++){
+            if (i==this.production_companies.length-1){
+                produciton+= this.production_companies[i].getName();
+            } else {
+                produciton += this.production_companies[i].getName() + ", ";
+            }
+        }
+        return produciton;
     }
 
     public void setProduction_companies(ProductionCompanies[] production_companies) {
