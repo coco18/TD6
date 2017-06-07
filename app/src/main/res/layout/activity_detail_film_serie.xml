@@ -25,7 +25,9 @@
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewDetailTitre" />
+                android:id="@+id/textViewDetailTitre"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"/>
         </GridLayout>
 
         <TextView
@@ -35,13 +37,16 @@
             android:padding="5dp"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            />
 
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewDetailDescription" />
+            android:id="@+id/textViewDetailDescription"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"/>
 
         <ImageView
             android:layout_width="match_parent"
