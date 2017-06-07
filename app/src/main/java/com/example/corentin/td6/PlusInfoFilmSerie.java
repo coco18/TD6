@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,6 +42,7 @@ public class PlusInfoFilmSerie  extends AppCompatActivity {
         final ImageView fond = (ImageView) findViewById(R.id.imageViewPlusDetailFond);
         final TextView production = (TextView) findViewById(R.id.textViewPlusDetailProduction);
         final TextView genres = (TextView) findViewById(R.id.textViewPlusDetailGenres);
+        final RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
         Intent intent = this.getIntent();
         int id = intent.getIntExtra("id", 0);
@@ -65,6 +69,8 @@ public class PlusInfoFilmSerie  extends AppCompatActivity {
                             production.setText("Production : " + filmGson.getProduction());
                             description.setText(filmGson.getOverview());
                             genres.setText("Genres : " + filmGson.getGenre());
+                            float result = filmGson.getPopularity()/2;
+                            ratingBar.setRating(result);
                         }
 
                     }, new Response.ErrorListener() {
@@ -98,6 +104,8 @@ public class PlusInfoFilmSerie  extends AppCompatActivity {
                             production.setText("Production : " + serieGson.getProduction());
                             description.setText(serieGson.getOverview());
                             genres.setText("Genres : " + serieGson.getGenre());
+                            float result = serieGson.getPopularity()/2;
+                            ratingBar.setRating(result);
                         }
 
                     }, new Response.ErrorListener() {
@@ -113,6 +121,18 @@ public class PlusInfoFilmSerie  extends AppCompatActivity {
 
         }
 
+        ratingBar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(PlusInfoFilmSerie.this,
+                        "Vallue"+ratingBar.getRating(),
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
     }
 
 
