@@ -16,11 +16,14 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="Bienvenue dans l'application de recherche de film, série et personne du cinéma."
+            android:text="Bienvenue ! Welcome ! Wilkommen!\n Venez découvrir notre application !!"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/activity_vertical_margin"
             android:textAlignment="center"
-            android:textSize="18sp"/>
+            android:textSize="20sp"
+            android:textColor="#005c99"
+            />
 
 
         <EditText
@@ -29,7 +32,10 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/editTextTitreFilm"
-            android:hint="Recherche" />
+            android:hint="Recherche"
+            android:backgroundTint="#800000"
+
+            />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -61,35 +67,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonTous"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                />
 
             <RadioButton
                 android:text="Film"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonFilm"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+               />
 
             <RadioButton
                 android:text="Série"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonSerie"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+
+                />
 
             <RadioButton
                 android:text="Personne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonPersonne"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+               />
         </RadioGroup>
 
         <Button
             android:text="Recherche"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonRecherche" />
+            android:id="@+id/buttonRecherche"
+            android:layout_margin="10dp"
+            android:background="#ccccff"
+            />
     </LinearLayout>
 
 </RelativeLayout>
