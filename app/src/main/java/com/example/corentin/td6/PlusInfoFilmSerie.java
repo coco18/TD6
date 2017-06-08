@@ -28,58 +28,46 @@ import java.util.List;
  * Created by Corentin on 05/06/2017.
  */
 
-public class PlusInfoFilmSerie  extends AppCompatActivity {
+public class PlusInfoFilmSerie  extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
+
+     TextView titre ;
+     TextView dateDeSortie ;
+     TextView description ;
+     ImageView poster ;
+     ImageView fond ;
+     TextView production ;
+     TextView genres ;
+     RatingBar ratingBar ;
+     String typeDemander;
+    String url;
+    Context context;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus_detail_film_serie);
 
-        final TextView titre = (TextView) findViewById(R.id.textViewPlusDetailTitre);
-        final TextView dateDeSortie = (TextView) findViewById(R.id.textViewPlusDetailDateSortie);
-        final TextView description = (TextView) findViewById(R.id.textViewPlusDetailDescription);
-        final ImageView poster = (ImageView) findViewById(R.id.imageViewPlusDetailPoster);
-        final ImageView fond = (ImageView) findViewById(R.id.imageViewPlusDetailFond);
-        final TextView production = (TextView) findViewById(R.id.textViewPlusDetailProduction);
-        final TextView genres = (TextView) findViewById(R.id.textViewPlusDetailGenres);
-        final RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        titre = (TextView) findViewById(R.id.textViewPlusDetailTitre);
+        dateDeSortie = (TextView) findViewById(R.id.textViewPlusDetailDateSortie);
+        description = (TextView) findViewById(R.id.textViewPlusDetailDescription);
+        poster = (ImageView) findViewById(R.id.imageViewPlusDetailPoster);
+        fond = (ImageView) findViewById(R.id.imageViewPlusDetailFond);
+        production = (TextView) findViewById(R.id.textViewPlusDetailProduction);
+        genres = (TextView) findViewById(R.id.textViewPlusDetailGenres);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
         Intent intent = this.getIntent();
-        int id = intent.getIntExtra("id", 0);
+        id = intent.getIntExtra("id", 0);
 
-        String url = "";
-        final String typeDemander = intent.getStringExtra("TypeDemander");
+        typeDemander = intent.getStringExtra("TypeDemander");
         if (typeDemander.contentEquals("Film")) {
             url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&language=fr";
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            final Context context = this.getApplicationContext();
 
-            final JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Gson gson = new Gson();
-                            final FilmGson filmGson = gson.fromJson(response.toString(), FilmGson.class);
-                            Picasso.with(context).load("https://image.tmdb.org/t/p/w500" + filmGson.getPoster_path()).into(poster);
-                            Picasso.with(context).load("https://image.tmdb.org/t/p/w1000" + filmGson.getBackdrop_path()).into(fond);
-                            titre.setText(filmGson.getTitle());
-                            dateDeSortie.setText("Date de sortie : " + filmGson.getRelease_date());
-                            production.setText("Production : " + filmGson.getProduction());
-                            description.setText(filmGson.getOverview());
-                            genres.setText("Genres : " + filmGson.getGenre());
-                            float result = filmGson.getPopularity()/2;
-                            ratingBar.setRating(result);
-                        }
-
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // TODO Auto-generated method stub
-                        }
-                    });
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, this, this);
 
             // Access the RequestQueue through your singleton class.
             queue.add(jsObjRequest);
@@ -88,33 +76,9 @@ public class PlusInfoFilmSerie  extends AppCompatActivity {
             url = "https://api.themoviedb.org/3/tv/+"+id+"?api_key=67e311a7c21dbb5f13026fae8fc5dd0f&language=fr";
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            final Context context = this.getApplicationContext();
 
-            final JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Gson gson = new Gson();
-                            final SerieGson serieGson = gson.fromJson(response.toString(), SerieGson.class);
-                            Picasso.with(context).load("https://image.tmdb.org/t/p/w500" + serieGson.getPoster_path()).into(poster);
-                            Picasso.with(context).load("https://image.tmdb.org/t/p/w1000" + serieGson.getBackdrop_path()).into(fond);
-                            titre.setText(serieGson.getOriginal_name());
-                            dateDeSortie.setText("Crée par : " + serieGson.getCreate_by());
-                            production.setText("Production : " + serieGson.getProduction());
-                            description.setText(serieGson.getOverview());
-                            genres.setText("Genres : " + serieGson.getGenre());
-                            float result = serieGson.getPopularity()/2;
-                            ratingBar.setRating(result);
-                        }
-
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // TODO Auto-generated method stub
-                        }
-                    });
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, this ,this);
 
             // Access the RequestQueue through your singleton class.
             queue.add(jsObjRequest);
@@ -136,4 +100,44 @@ public class PlusInfoFilmSerie  extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(PlusInfoFilmSerie.this,
+                "Erreur de connexion",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        context = getApplicationContext();
+        if (typeDemander.contentEquals("Film")) {
+
+            Gson gson = new Gson();
+            FilmGson filmGson = gson.fromJson(response.toString(), FilmGson.class);
+            Picasso.with(context).load("https://image.tmdb.org/t/p/w500" + filmGson.getPoster_path()).into(poster);
+            Picasso.with(context).load("https://image.tmdb.org/t/p/w1000" + filmGson.getBackdrop_path()).into(fond);
+            titre.setText(filmGson.getTitle());
+            dateDeSortie.setText("Date de sortie : " + filmGson.getRelease_date());
+            production.setText("Production : " + filmGson.getProduction());
+            description.setText(filmGson.getOverview());
+            genres.setText("Genres : " + filmGson.getGenre());
+            float result = filmGson.getPopularity()/2;
+            ratingBar.setRating(result);
+
+
+        } else if (typeDemander.contentEquals("Serie")) {
+            Gson gson = new Gson();
+
+            SerieGson serieGson = gson.fromJson(response.toString(), SerieGson.class);
+            Picasso.with(context).load("https://image.tmdb.org/t/p/w500" + serieGson.getPoster_path()).into(poster);
+            Picasso.with(context).load("https://image.tmdb.org/t/p/w1000" + serieGson.getBackdrop_path()).into(fond);
+            titre.setText(serieGson.getOriginal_name());
+            dateDeSortie.setText("Crée par : " + serieGson.getCreate_by());
+            production.setText("Production : " + serieGson.getProduction());
+            description.setText(serieGson.getOverview());
+            genres.setText("Genres : " + serieGson.getGenre());
+            float result = serieGson.getPopularity() / 2;
+            ratingBar.setRating(result);
+        }
+    }
 }

@@ -63,6 +63,7 @@ public class Accueil extends AppCompatActivity {
             }
         });
 
+        // clic sur le bouton valider du clavier
         editTextRecherche.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
