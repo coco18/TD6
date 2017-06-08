@@ -97,7 +97,7 @@ public class Resultat extends AppCompatActivity implements Response.Listener<JSO
             if (jsonArray.length() < nbResultatAfficher) {
                 nbResultatAfficher = jsonArray.length();
             }
-            //Si le nombre résultat disponnible sur le site < nbresultat afficher
+            //Si le nombre résultat disponible sur le site < nbresultat afficher
             if (jsonArray.length() * page >= nbResultatResponse) {
                 Button pageSuivante = (Button) findViewById(R.id.buttonPageSuivante);
                 pageSuivante.setClickable(false);
@@ -122,21 +122,21 @@ public class Resultat extends AppCompatActivity implements Response.Listener<JSO
                 }
             }
 
-            textView.setText("Nombre de resultat : " + nbResultatResponse);
+            textView.setText("Nombre de resultats : " + nbResultatResponse);
             if (listResultat.size() == 0) {
                 Button pageSuivante = (Button) findViewById(R.id.buttonPageSuivante);
                 pageSuivante.setClickable(false);
                 pageSuivante.setAlpha(.5f);
-                textView.setText("Aucun résultat disponnible");
+                textView.setText("Aucun résultat disponible");
             }
         } catch (JSONException e){
-            textView.setText("Aucun résultat disponnible");
+            textView.setText("Aucun résultat disponible");
         }
     }
 
     @Override
     public void onErrorResponse (VolleyError error){
-        textView.setText("Aucun résultat disponnible");
+        textView.setText("Aucun résultat disponible");
     }
 
     public void crerFilm(JSONObject jsonObject) throws JSONException {
