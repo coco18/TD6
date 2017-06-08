@@ -30,14 +30,16 @@
                     android:text="TextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewPlusDetailTitre" />
+                    android:id="@+id/textViewPlusDetailTitre"
+                    android:layout_margin="10dp" />
 
                 <TextView
                     android:text="TextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewPlusDetailDateSortie"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"/>
 
             </LinearLayout>
 
@@ -48,14 +50,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textViewPlusDetailGenres"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_margin="10dp"/>
 
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textViewPlusDetailProduction"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
 
         <TextView
             android:text="Populariter : "
@@ -70,7 +74,10 @@
             android:numStars="5"
             android:stepSize="0.1"
             android:rating="0.1"
-            android:isIndicator="true" />
+            android:isIndicator="true"
+            android:secondaryProgressTint="#FF8C00"
+            android:progressTint="#FF8C00"
+            />
 
         <TextView
             android:text="Description : "
@@ -85,7 +92,8 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewPlusDetailDescription" />
+            android:id="@+id/textViewPlusDetailDescription"
+            android:layout_margin="10dp"/>
 
         <ImageView
             android:layout_width="match_parent"

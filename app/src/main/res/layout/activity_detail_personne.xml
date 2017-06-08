@@ -19,15 +19,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:color/background_light"
-                android:id="@+id/imageViewDetailImagePersonne" />
+                android:id="@+id/imageViewDetailImagePersonne"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
+
 
             <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewDetailNom"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_margin="15dp"
+                />
 
         </GridLayout>
 
@@ -42,10 +44,9 @@
 
         <GridView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="447dp"
             android:id="@+id/gridView"
-            android:columnWidth="90dp"
-            android:numColumns="auto_fit"
+            android:numColumns="3"
             android:verticalSpacing="10dp"
             android:horizontalSpacing="10dp"
             android:stretchMode="columnWidth"
